@@ -29,10 +29,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id_pinjam = $_POST['ID_Peminjaman'];
         $stmt = mysqli_prepare($koneksi, "CALL SP_KembalikanBuku(?)");
         mysqli_stmt_bind_param($stmt, "s", $id_pinjam);
-        if (mysqli_stmt_execute($stmt)) {
+        mysqli_stmt_execute($stmt);
+        $stmt->bind_result($col,$col2);
+        $result = $stmt->fetch();
+        if ($col2 == 1) {
             pesan('Pengembalian berhasil diproses menggunakan SP_KembalikanBuku.');
         } else {
-            pesan('Pengembalian gagal: ' . mysqli_stmt_error($stmt) . '. Jika status sudah Terlambat, jalankan file perbaikan_procedure.sql terlebih dahulu.', 'gagal');
+            pesan($col, 'gagal');
         }
         mysqli_stmt_close($stmt);
         bersihkanHasilCall($koneksi);
