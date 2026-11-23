@@ -1,4 +1,6 @@
 <?php
+// di edit viona
+// hello 123
 // Halaman ini dimuat oleh index.php. Jika dibuka langsung, arahkan ke index.php.
 if (!defined('APP_PERPUS')) {
     header('Location: index.php?halaman=anggota');
